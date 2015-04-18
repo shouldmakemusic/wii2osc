@@ -1,3 +1,8 @@
+.DS_Store
+Wii2Osc.xcodeproj/
+Wii2Osc/.DS_Store
+build/
+
 # Compiled Object files
 *.slo
 *.lo
