@@ -95,7 +95,7 @@ TARGET_LINK_LIBRARIES(wii2osc util)
 INSTALL(TARGETS wii2osc DESTINATION /usr/local/bin)
 
 # Config dir
-MAKE_DIRECTORY($ENV{HOME}/.wii2osc)
+MAKE_DIRECTORY($ENV{HOME}/.wiic)
 
 # Documentation
 #SET(DOXYFILE_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/../doc")
