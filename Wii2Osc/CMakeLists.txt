@@ -1,6 +1,9 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 PROJECT(Wii2Osc)
 
+set(CMAKE_MACOSX_RPATH 1)
+SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
 # Preliminary stuff
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	SET(LINUX 1)
@@ -13,18 +16,18 @@ SET(CMAKE_CXX_FLAGS "-g -Wall")
 # Third-party libraries
 FIND_PACKAGE(Bluetooth REQUIRED)
 
-FIND_PACKAGE(OpenCV QUIET)
-IF(OpenCV_FOUND)
-	MESSAGE(STATUS "Found OpenCV:")
-	MESSAGE(STATUS "   - Include Dir: ${OpenCV_INCLUDE_DIRS}")
-	MESSAGE(STATUS "   - Libs: ${OpenCV_LIBS}")
-	MESSAGE(STATUS "   - Version: ${OpenCV_VERSION}")
-	IF("${OpenCV_VERSION}" STRLESS "2.2.0")
-		ADD_DEFINITIONS(-DCV_OLD)
-	ENDIF("${OpenCV_VERSION}" STRLESS "2.2.0")
-ELSE(OpenCV_FOUND)
-	MESSAGE(STATUS "OpenCV not found but not required. WiiC-ML will not be compiled.")
-ENDIF(OpenCV_FOUND)
+#FIND_PACKAGE(OpenCV QUIET)
+#IF(OpenCV_FOUND)
+#	MESSAGE(STATUS "Found OpenCV:“)
+#	MESSAGE(STATUS "   - Include Dir: ${OpenCV_INCLUDE_DIRS}")
+#	MESSAGE(STATUS "   - Libs: ${OpenCV_LIBS}")
+#	MESSAGE(STATUS "   - Version: ${OpenCV_VERSION}")
+#	IF("${OpenCV_VERSION}" STRLESS "2.2.0")
+#		ADD_DEFINITIONS(-DCV_OLD)
+#	ENDIF("${OpenCV_VERSION}" STRLESS "2.2.0")
+#ELSE(OpenCV_FOUND)
+#	MESSAGE(STATUS "OpenCV not found but not required. WiiC-ML will not be compiled.")
+#ENDIF(OpenCV_FOUND)
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR})
 
@@ -93,6 +96,8 @@ TARGET_LINK_LIBRARIES(wii2osc wiicpp)
 TARGET_LINK_LIBRARIES(wii2osc wiic)
 TARGET_LINK_LIBRARIES(wii2osc util)
 INSTALL(TARGETS wii2osc DESTINATION /usr/local/bin)
+
+set_target_properties(wii2osc PROPERTIES INSTALL_RPATH "@loader_path/../lib:@executable_path/lib")
 
 # Config dir
 MAKE_DIRECTORY($ENV{HOME}/.wiic)
